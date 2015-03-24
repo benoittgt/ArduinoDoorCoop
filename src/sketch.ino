@@ -1,7 +1,7 @@
 int ledPinTest = 13;
 int lightSensorPin = 0;
-int motorDownSensor = 1;
-int motorUpSensor = 2;
+int motorDownSensor = A1;
+int motorUpSensor = A2;
 int motorDown = 11;
 int motorUp = 12;
 int lightSensor;
@@ -33,14 +33,28 @@ void loop(){
 void motorGoUp(){
   delay(1000);
   Serial.print("i'm in motorUp: motorUpSensor = ");
-  Serial.println(motorUpSensor);
+  Serial.println(analogRead(motorUpSensor));
+  if (analogRead(motorUpSensor) <= 3) {
+    delay(1000);
+    Serial.println("Motor is up !");
+  } else {
+    if (analogRead(motorDownSensor) <= 3){
+      Serial.println("Motor go up!");
+      digitalWrite(motorUp, HIGH);
+      delay(1000);
+    } else {
+      digitalWrite(motorUp, LOW);
+      Serial.println("ouhaaaaaa !");
+      delay(2000);
+    }
+  }
   delay(1000);
 }
 
 void motorGoDown(){
   delay(1000);
   Serial.print("i'm in motorDown, motorDownSensor = ");
-  Serial.println(motorDownSensor);
+  Serial.println(analogRead(motorDownSensor));
   delay(1000);
 }
 
